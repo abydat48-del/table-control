@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#101014">
+<title>Table Control | Nightclub</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="topbar">
+  <div>
+    <div class="eyebrow">NIGHTCLUB MANAGEMENT</div>
+    <h1>Table Control <span>●</span></h1>
+    <p>إدارة حجوزات الطاولات</p>
+  </div>
+  <div class="date-pill" id="todayLabel">لوحة تجريبية</div>
+</header>
+
+<main>
+  <section class="stats" aria-label="ملخص الحجوزات">
+    <article class="stat"><span>إجمالي الطاولات</span><strong id="totalCount">50</strong></article>
+    <article class="stat free"><span>فاضية</span><strong id="freeCount">—</strong></article>
+    <article class="stat reserved"><span>محجوزة</span><strong id="reservedCount">—</strong></article>
+    <article class="stat arrived"><span>وصلوا</span><strong id="arrivedCount">—</strong></article>
+  </section>
+
+  <section class="notice">
+    <strong>نسخة تجريبية على هذا الجهاز</strong>
+    <span>التعديلات حاليًا محفوظة في المتصفح فقط. للمشاركة المباشرة بين المديرين، نحتاج ربط قاعدة بيانات مشتركة وتسجيل دخول.</span>
+  </section>
+
+  <nav class="tabs">
+    <button class="tab active" data-view="floor">مخطط الطاولات</button>
+    <button class="tab" data-view="bookings">جدول الحجوزات</button>
+  </nav>
+
+  <section id="floorView" class="panel">
+    <div class="section-head">
+      <div><h2>مخطط الطاولات</h2><p>اضغط على الطاولة لإضافة حجز أو تعديل حالتها.</p></div>
+      <select id="statusFilter" aria-label="تصفية الطاولات">
+        <option value="all">كل الحالات</option>
+        <option value="free">فاضية</option>
+        <option value="reserved">محجوزة</option>
+        <option value="arrived">وصل الزبون</option>
+        <option value="seated">جلسوا</option>
+      </select>
+    </div>
+    <div class="legend">
+      <span><i class="dot free-dot"></i> فاضية</span>
+      <span><i class="dot reserved-dot"></i> محجوزة</span>
+      <span><i class="dot arrived-dot"></i> وصل</span>
+      <span><i class="dot seated-dot"></i> جلسوا</span>
+    </div>
+    <div id="tableGrid" class="table-grid"></div>
+  </section>
+
+  <section id="bookingsView" class="panel hidden">
+    <div class="section-head">
+      <div><h2>جدول الحجوزات</h2><p>الحجوزات المسجلة لهذا اليوم.</p></div>
+      <button class="primary" id="addBookingBtn">+ حجز جديد</button>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>الطاولة</th><th>اسم الزبون</th><th>وقت الوصول</th><th>الأشخاص</th><th>الحالة</th><th>إجراء</th></tr></thead>
+        <tbody id="bookingRows"></tbody>
+      </table>
+    </div>
+    <p id="emptyBookings" class="empty hidden">ما في حجوزات مسجلة حاليًا.</p>
+  </section>
+</main>
+
+<dialog id="bookingDialog">
+  <form id="bookingForm" method="dialog">
+    <div class="dialog-head"><div><div class="eyebrow">TABLE RESERVATION</div><h2 id="dialogTitle">حجز طاولة</h2></div><button type="button" class="icon-btn" id="closeDialog" aria-label="إغلاق">×</button></div>
+    <input type="hidden" id="tableNumber">
+    <label>رقم الطاولة<select id="bookingTable" required></select></label>
+    <label>اسم الزبون<input id="guestName" required maxlength="80" placeholder="اسم الزبون"></label>
+    <div class="two-col">
+      <label>وقت الوصول<input id="arrivalTime" type="time" required></label>
+      <label>عدد الأشخاص<input id="guestCount" type="number" min="1" max="50" value="4" required></label>
+    </div>
+    <label>رقم للتواصل (اختياري)<input id="guestPhone" type="tel" maxlength="30" placeholder="رقم الهاتف"></label>
+    <label>ملاحظات (اختياري)<textarea id="bookingNotes" rows="2" maxlength="250" placeholder="مثلاً: عيد ميلاد، تفضيل مكان..."></textarea></label>
+    <label>حالة الحجز<select id="bookingStatus"><option value="reserved">محجوزة</option><option value="arrived">وصل الزبون</option><option value="seated">جلسوا</option></select></label>
+    <div class="form-actions"><button type="button" class="secondary" id="cancelDialog">إلغاء</button><button class="primary" id="saveBookingBtn" type="submit">حفظ الحجز</button></div>
+    <p class="form-note">لا تدخل معلومات حساسة غير ضرورية. هذه النسخة التجريبية ليست مرتبطة بعد بحسابات أو قاعدة بيانات مشتركة.</p>
+  </form>
+</dialog>
+<script src="app.js"></script>
+</body>
+</html>
